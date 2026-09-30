@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title || 'Register - Ankit Chauhan' %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236C63FF'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Inter' font-weight='800' font-size='18' fill='white'>A</text></svg>" />
+</head>
+<body>
+  <!-- Flash Messages -->
+  <div class="flash-container" id="flashContainer">
+    <% if (typeof success_msg !== 'undefined' && success_msg && success_msg.length > 0) { %>
+      <div class="flash-message flash-success"><i class="ph ph-check-circle"></i> <%= success_msg %></div>
+    <% } %>
+    <% if (typeof error_msg !== 'undefined' && error_msg && error_msg.length > 0) { %>
+      <div class="flash-message flash-error"><i class="ph ph-warning-circle"></i> <%= error_msg %></div>
+    <% } %>
+  </div>
+
+  <div class="auth-page">
+    <div class="auth-card fade-in-up" style="max-width: 500px;">
+      <div class="auth-logo">
+        <a href="/" style="display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; margin-bottom: 1rem;">
+          <div class="nav-logo-icon" style="width: 52px; height: 52px; font-size: 1.5rem;">AC</div>
+          <div class="nav-logo-text">
+            <span class="nav-logo-name" style="font-size: 1.25rem;">Ankit Chauhan</span>
+            <span class="nav-logo-role">CMS Developer</span>
+          </div>
+        </a>
+      </div>
+
+      <h1 class="auth-title">Create Account 🚀</h1>
+      <p class="auth-subtitle">Join and get access to exclusive content.</p>
+
+      <!-- Error Messages -->
+      <% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+      <div style="background: rgba(255, 101, 132, 0.1); border: 1px solid rgba(255, 101, 132, 0.3); border-radius: 12px; padding: 1rem; margin: 1.5rem 0;">
+        <% errors.forEach(err => { %>
+          <p style="color: var(--secondary); font-size: 0.88rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+            <i class="ph ph-warning-circle"></i> <%= err %>
+          </p>
+        <% }) %>
+      </div>
+      <% } %>
+
+      <form action="/auth/register" method="POST" style="margin-top: 2rem;" id="registerForm">
+        <div class="form-group">
+          <label class="form-label" for="regName">
+            <i class="ph ph-user"></i> Full Name *
+          </label>
+          <input type="text" id="regName" name="name" class="form-control" placeholder="Rahul Sharma" value="<%= typeof name !== 'undefined' ? name : '' %>" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regEmail">
+            <i class="ph ph-envelope"></i> Email Address *
+          </label>
+          <input type="email" id="regEmail" name="email" class="form-control" placeholder="rahul@example.com" value="<%= typeof email !== 'undefined' ? email : '' %>" required autocomplete="email" />
+        </div>
+        <div class="grid-2" style="gap: 1rem; margin-bottom: 0;">
+          <div class="form-group">
+            <label class="form-label" for="regPassword">
+              <i class="ph ph-lock"></i> Password *
+            </label>
+            <input type="password" id="regPassword" name="password" class="form-control" placeholder="Min. 6 characters" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regPassword2">
+              <i class="ph ph-lock-key"></i> Confirm Password *
+            </label>
+            <input type="password" id="regPassword2" name="password2" class="form-control" placeholder="Repeat password" required />
+          </div>
+        </div>
+
+        <!-- Password strength indicator -->
+        <div style="margin-bottom: 1.5rem;">
+          <div style="height: 4px; background: var(--dark-3); border-radius: 2px; overflow: hidden;">
+            <div id="strengthBar" style="height: 100%; width: 0%; border-radius: 2px; transition: all 0.3s;"></div>
+          </div>
+          <span id="strengthText" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem; display: block;"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" style="border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+          <i class="ph ph-user-plus"></i> Create Account
+        </button>
+      </form>
+
+      <div class="auth-divider">or</div>
+
+      <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+        Already have an account?
+        <a href="/auth/login" style="color: var(--primary); font-weight: 600;">Sign in →</a>
+      </p>
+      <p style="text-align: center; margin-top: 1rem;">
+        <a href="/" style="color: var(--text-muted); font-size: 0.85rem;">
+          <i class="ph ph-arrow-left"></i> Back to Website
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    // Password strength
+    const pwd = document.getElementById('regPassword');
+    const bar = document.getElementById('strengthBar');
+    const text = document.getElementById('strengthText');
+    pwd.addEventListener('input', function() {
+      const val = this.value;
+      let strength = 0;
+      if (val.length >= 6) strength++;
+      if (val.length >= 10) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+      const levels = [
+        {w: '0%', c: 'transparent', t: ''},
+        {w: '25%', c: '#FF6584', t: 'Weak'},
+        {w: '50%', c: '#FFD700', t: 'Fair'},
+        {w: '75%', c: '#43E97B', t: 'Good'},
+        {w: '100%', c: '#6C63FF', t: 'Strong'}
+      ];
+      const lvl = levels[Math.min(strength, 4)];
+      bar.style.width = lvl.w;
+      bar.style.background = lvl.c;
+      text.textContent = lvl.t ? 'Password strength: ' + lvl.t : '';
+      text.style.color = lvl.c;
+    });
+  </script>
+</body>
+</html>

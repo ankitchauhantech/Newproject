@@ -1,0 +1,59 @@
+<div class="admin-header">
+  <div>
+    <h1 class="admin-title">📝 Blog Posts</h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Manage your blog content.</p>
+  </div>
+  <a href="/admin/posts/add" class="btn btn-primary">
+    <i class="ph ph-plus"></i> Write New Post
+  </a>
+</div>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); overflow: hidden;">
+  <% if (posts.length > 0) { %>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Author</th>
+        <th>Views</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% posts.forEach(post => { %>
+      <tr>
+        <td style="font-weight: 600; color: var(--text-primary); max-width: 300px;">
+          <%= post.title.substring(0, 50) %><%= post.title.length > 50 ? '...' : '' %>
+        </td>
+        <td><span class="badge badge-primary"><%= post.category %></span></td>
+        <td><%= post.author_name || 'Ankit Chauhan' %></td>
+        <td>👁️ <%= post.views %></td>
+        <td>
+          <span class="badge <%= post.published ? 'badge-success' : 'badge-secondary' %>">
+            <%= post.published ? 'Published' : 'Draft' %>
+          </span>
+        </td>
+        <td><%= new Date(post.created_at).toLocaleDateString('en-IN') %></td>
+        <td>
+          <div style="display: flex; gap: 0.5rem;">
+            <a href="/blog/<%= post.slug %>" class="btn btn-secondary btn-sm" target="_blank" title="View">
+              <i class="ph ph-eye"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <div style="padding: 4rem; text-align: center; color: var(--text-muted);">
+    <i class="ph ph-newspaper" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+    <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">No Blog Posts Yet</h3>
+    <p style="margin-bottom: 1.5rem;">Start writing to share your knowledge.</p>
+    <a href="/admin/posts/add" class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Write First Post</a>
+  </div>
+  <% } %>
+</div>

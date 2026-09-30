@@ -1,0 +1,93 @@
+<%- include('../partials/header', {title: title}) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="section-tag">What I Offer</div>
+        <h1 class="page-hero-title">My <span class="text-gradient">Services</span></h1>
+        <nav class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <span>Services</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        <% if (services && services.length > 0) { %>
+          <% services.forEach(function(service, i) { %>
+          <div class="skill-card fade-in-up" style="animation-delay: <%= i * 0.1 %>s;">
+            <div class="skill-icon <%= service.icon_color || 'purple' %>"><%= service.icon %></div>
+            <h3><%= service.title %></h3>
+            <p><%= service.description %></p>
+            <% if (service.features) { %>
+            <ul style="margin-top: 1rem; list-style: none; display: flex; flex-direction: column; gap: 0.4rem;">
+              <% service.features.split(',').forEach(function(feature) { %>
+              <li style="color: var(--text-secondary); font-size: 0.88rem;">✅ <%= feature.trim() %></li>
+              <% }) %>
+            </ul>
+            <% } %>
+            <a href="/contact" class="btn btn-primary btn-sm mt-3">Get Quote</a>
+          </div>
+          <% }) %>
+        <% } else { %>
+          <div style="text-align: center; padding: 4rem; color: var(--text-muted); grid-column: 1 / -1;">
+            <i class="ph ph-list-dashes" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+            <h3>No Services Available</h3>
+            <p>Services will appear here once added.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--dark-2);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">My Process</div>
+        <h2 class="section-title">How I Work</h2>
+        <p class="section-subtitle">A clear, transparent process from idea to launch.</p>
+      </div>
+      <div class="grid-4">
+        <% [
+          {step: '01', icon: '💬', title: 'Discovery', desc: 'Understanding your goals, requirements, and target audience.'},
+          {step: '02', icon: '🎨', title: 'Design & Plan', desc: 'Creating wireframes, architecture plan, and project roadmap.'},
+          {step: '03', icon: '💻', title: 'Development', desc: 'Building your solution with clean, maintainable code.'},
+          {step: '04', icon: '🚀', title: 'Launch & Support', desc: 'Deploying, testing, and ongoing maintenance support.'}
+        ].forEach(function(item, i) { %>
+        <div class="fade-in-up" style="text-align: center; animation-delay: <%= i * 0.1 %>s;">
+          <div style="width: 70px; height: 70px; background: var(--dark-3); border: 2px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.8rem;">
+            <%= item.icon %>
+          </div>
+          <div style="color: var(--primary); font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem;"><%= item.step %></div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem;"><%= item.title %></h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;"><%= item.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container" style="position: relative; z-index: 1; text-align: center;">
+      <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">
+        Ready to <span class="text-gradient">Get Started?</span>
+      </h2>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
+        Tell me about your project and let's build something amazing together.
+      </p>
+      <a href="/contact" class="btn btn-primary btn-lg">
+        <i class="ph ph-paper-plane-tilt"></i> Start a Project
+      </a>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>

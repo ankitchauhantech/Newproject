@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title || 'Admin - Ankit Chauhan' %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236C63FF'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Inter' font-weight='800' font-size='18' fill='white'>A</text></svg>" />
+</head>
+<body>
+  <!-- Flash Messages -->
+  <div class="flash-container" id="flashContainer">
+    <% if (success_msg && success_msg.length > 0) { %>
+      <div class="flash-message flash-success"><i class="ph ph-check-circle"></i> <%= success_msg %></div>
+    <% } %>
+    <% if (error_msg && error_msg.length > 0) { %>
+      <div class="flash-message flash-error"><i class="ph ph-warning-circle"></i> <%= error_msg %></div>
+    <% } %>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <div class="nav-logo-icon">AC</div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-name">Admin Panel</span>
+          <span class="nav-logo-role">Ankit Chauhan</span>
+        </div>
+      </div>
+
+      <ul class="admin-nav">
+        <li>
+          <a href="/admin/dashboard" class="admin-nav-link <%= activePage === 'dashboard' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="ph ph-squares-four"></i></span>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="/admin/services" class="admin-nav-link <%= typeof activePage !== 'undefined' && activePage === 'services' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="ph ph-list-dashes"></i></span>
+            Services
+          </a>
+        </li>
+        <li>
+          <a href="/admin/projects" class="admin-nav-link <%= typeof activePage !== 'undefined' && activePage === 'projects' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="ph ph-briefcase"></i></span>
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="/admin/posts" class="admin-nav-link <%= activePage === 'posts' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="ph ph-newspaper"></i></span>
+            Blog Posts
+          </a>
+        </li>
+        <li>
+          <a href="/admin/messages" class="admin-nav-link <%= activePage === 'messages' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="ph ph-envelope"></i></span>
+            Messages
+          </a>
+        </li>
+        <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+          <a href="/" class="admin-nav-link">
+            <span class="nav-icon"><i class="ph ph-globe"></i></span>
+            View Website
+          </a>
+        </li>
+        <li>
+          <a href="/auth/logout" class="admin-nav-link" style="color: var(--secondary);">
+            <span class="nav-icon"><i class="ph ph-sign-out"></i></span>
+            Logout
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <%- body %>
+    </main>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

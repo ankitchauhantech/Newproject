@@ -1,0 +1,124 @@
+<%- include('../partials/header', {title: title}) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="section-tag">My Work</div>
+        <h1 class="page-hero-title">My <span class="text-gradient">Portfolio</span></h1>
+        <nav class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <span>Portfolio</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-filter="all">All Projects</button>
+        <button class="filter-tab" data-filter="CMS">CMS</button>
+        <button class="filter-tab" data-filter="WordPress">WordPress</button>
+        <button class="filter-tab" data-filter="Headless CMS">Headless CMS</button>
+        <button class="filter-tab" data-filter="Node.js">Node.js</button>
+        <button class="filter-tab" data-filter="Web App">Web App</button>
+      </div>
+
+      <div class="grid-3" id="projectsGrid">
+        <% projects.forEach(function(project, i) { %>
+        <article class="card fade-in-up project-item" data-category="<%= project.category %>" style="animation-delay: <%= i * 0.1 %>s;">
+          <div style="position: relative; overflow: hidden;">
+            <img src="<%= project.image %>" alt="<%= project.title %>" class="card-image" loading="lazy" style="transition: transform 0.4s ease;" />
+            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(108, 99, 255, 0.8), rgba(255, 101, 132, 0.6)); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 1rem;" class="card-hover-overlay">
+              <a href="/portfolio/<%= project.id %>" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span class="card-tag"><%= project.category %></span>
+              <% if (project.featured) { %>
+                <span class="badge badge-success">⭐ Featured</span>
+              <% } %>
+            </div>
+            <h3 class="card-title"><%= project.title %></h3>
+            <p class="card-text"><%= project.description.substring(0, 100) %>...</p>
+            <div class="tech-badges mb-2">
+              <% project.tech_stack.split(',').slice(0, 4).forEach(function(tech) { %>
+                <span class="tech-badge"><%= tech.trim() %></span>
+              <% }) %>
+            </div>
+            <div class="card-footer">
+              <a href="/portfolio/<%= project.id %>" class="btn btn-primary btn-sm">
+                <i class="ph ph-eye"></i> View Details
+              </a>
+              <div style="display: flex; gap: 0.5rem;">
+                <a href="<%= project.live_url %>" class="btn btn-secondary btn-sm" target="_blank" title="Live Demo">
+                  <i class="ph ph-arrow-square-out"></i>
+                </a>
+                <a href="<%= project.github_url %>" class="btn btn-secondary btn-sm" target="_blank" title="GitHub">
+                  <i class="ph ph-github-logo"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+
+      <% if (projects.length === 0) { %>
+      <div style="text-align: center; padding: 5rem 0; color: var(--text-muted);">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">📁</div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">No Projects Yet</h3>
+        <p>Projects will appear here once added.</p>
+      </div>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container" style="position: relative; z-index: 1; text-align: center;">
+      <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">
+        Have a Project in <span class="text-gradient">Mind?</span>
+      </h2>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem;">Let's collaborate and build something great together.</p>
+      <a href="/contact" class="btn btn-primary btn-lg">
+        <i class="ph ph-paper-plane-tilt"></i> Start a Project
+      </a>
+    </div>
+  </section>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      document.querySelectorAll('.project-item').forEach(item => {
+        if (filter === 'all' || item.dataset.category === filter) {
+          item.style.display = 'block';
+          item.style.animation = 'fadeInUp 0.4s ease forwards';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  document.querySelectorAll('.card').forEach(card => {
+    const overlay = card.querySelector('.card-hover-overlay');
+    if (overlay) {
+      card.addEventListener('mouseenter', () => overlay.style.opacity = '1');
+      card.addEventListener('mouseleave', () => overlay.style.opacity = '0');
+    }
+  });
+});
+</script>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>

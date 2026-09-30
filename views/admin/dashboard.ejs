@@ -1,0 +1,106 @@
+<div class="admin-header">
+  <div>
+    <h1 class="admin-title">📊 Dashboard</h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Welcome back, Ankit! Here's what's happening.</p>
+  </div>
+  <div style="display: flex; gap: 1rem;">
+    <a href="/admin/projects/add" class="btn btn-primary btn-sm">
+      <i class="ph ph-plus"></i> Add Project
+    </a>
+    <a href="/admin/posts/add" class="btn btn-secondary btn-sm">
+      <i class="ph ph-newspaper"></i> New Post
+    </a>
+  </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon purple"><i class="ph ph-briefcase"></i></div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.projects %></div>
+      <div class="stat-label">Total Projects</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon blue"><i class="ph ph-newspaper"></i></div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.posts %></div>
+      <div class="stat-label">Blog Posts</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon pink"><i class="ph ph-envelope"></i></div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.messages %></div>
+      <div class="stat-label">Unread Messages</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon green"><i class="ph ph-users"></i></div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.users %></div>
+      <div class="stat-label">Registered Users</div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Messages -->
+<div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); overflow: hidden;">
+  <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
+    <h3 style="font-size: 1rem; font-weight: 700;">📩 Recent Messages</h3>
+    <a href="/admin/messages" class="btn btn-secondary btn-sm">View All</a>
+  </div>
+  <% if (recentMessages.length > 0) { %>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% recentMessages.forEach(msg => { %>
+      <tr>
+        <td style="font-weight: 600; color: var(--text-primary);"><%= msg.name %></td>
+        <td><%= msg.email %></td>
+        <td><%= msg.subject || 'No Subject' %></td>
+        <td><%= new Date(msg.created_at).toLocaleDateString('en-IN') %></td>
+        <td>
+          <span class="badge <%= msg.status === 'unread' ? 'badge-danger' : 'badge-success' %>">
+            <%= msg.status %>
+          </span>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <div style="padding: 3rem; text-align: center; color: var(--text-muted);">
+    <i class="ph ph-envelope-simple" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+    <p>No messages yet.</p>
+  </div>
+  <% } %>
+</div>
+
+<!-- Quick Actions -->
+<div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+  <a href="/admin/projects/add" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); padding: 1.5rem; text-align: center; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🚀</div>
+    <h4 style="color: var(--text-primary); font-size: 0.95rem; margin-bottom: 0.25rem;">Add New Project</h4>
+    <p style="color: var(--text-muted); font-size: 0.82rem;">Add to portfolio</p>
+  </a>
+  <a href="/admin/posts/add" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); padding: 1.5rem; text-align: center; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+    <div style="font-size: 2rem; margin-bottom: 0.75rem;">✍️</div>
+    <h4 style="color: var(--text-primary); font-size: 0.95rem; margin-bottom: 0.25rem;">Write Blog Post</h4>
+    <p style="color: var(--text-muted); font-size: 0.82rem;">Share your knowledge</p>
+  </a>
+  <a href="/admin/messages" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); padding: 1.5rem; text-align: center; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+    <div style="font-size: 2rem; margin-bottom: 0.75rem;">📬</div>
+    <h4 style="color: var(--text-primary); font-size: 0.95rem; margin-bottom: 0.25rem;">View Messages</h4>
+    <p style="color: var(--text-muted); font-size: 0.82rem;"><%= stats.messages %> unread</p>
+  </a>
+</div>

@@ -1,0 +1,239 @@
+<%- include('../partials/header', {title: title}) %>
+<%- include('../partials/navbar') %>
+
+<!-- Flash Messages -->
+<div class="flash-container" id="flashContainer">
+  <% if (success_msg && success_msg.length > 0) { %>
+    <div class="flash-message flash-success"><i class="ph ph-check-circle"></i> <%= success_msg %></div>
+  <% } %>
+  <% if (error_msg && error_msg.length > 0) { %>
+    <div class="flash-message flash-error"><i class="ph ph-warning-circle"></i> <%= error_msg %></div>
+  <% } %>
+</div>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-container">
+      <div class="hero-content fade-in-up">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Available for Projects
+        </div>
+        <h1 class="hero-title">
+          Hi, I'm <span class="highlight">Ankit Chauhan</span><br/>
+          CMS Developer &<br/>Web Specialist
+        </h1>
+        <p class="hero-description">
+          I build powerful, scalable, and beautiful web solutions using WordPress, Headless CMS, and modern web technologies. Let's turn your ideas into reality.
+        </p>
+        <div class="hero-cta">
+          <a href="/portfolio" class="btn btn-primary btn-lg">
+            <i class="ph ph-briefcase"></i> View My Work
+          </a>
+          <a href="/contact" class="btn btn-secondary btn-lg">
+            <i class="ph ph-paper-plane-tilt"></i> Hire Me
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-number">50+</span>
+            <span class="hero-stat-label">Projects Done</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">30+</span>
+            <span class="hero-stat-label">Happy Clients</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">5+</span>
+            <span class="hero-stat-label">Years Exp.</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image fade-in-up animate-delay-2">
+        <div class="hero-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800&q=80" alt="Ankit Chauhan - CMS Developer" loading="lazy" />
+          <div class="hero-image-overlay"></div>
+        </div>
+        <div class="hero-float-card">
+          <div class="float-card-icon green">✅</div>
+          <div class="float-card-text">
+            <strong>Project Delivered</strong>
+            <span>E-Commerce CMS</span>
+          </div>
+        </div>
+        <div class="hero-float-card">
+          <div class="float-card-icon purple">⚡</div>
+          <div class="float-card-text">
+            <strong>WordPress Expert</strong>
+            <span>5+ Years</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="section" style="background: var(--dark-2);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">What I Do</div>
+        <h2 class="section-title">My Services</h2>
+        <p class="section-subtitle">From WordPress development to headless CMS architecture, I offer a complete range of web development services.</p>
+      </div>
+      <div class="grid-4">
+        <% if (services && services.length > 0) { %>
+          <% services.forEach(function(service, i) { %>
+          <div class="skill-card fade-in-up" style="animation-delay: <%= i * 0.1 %>s;">
+            <div class="skill-icon <%= service.icon_color || 'purple' %>"><%= service.icon %></div>
+            <h3><%= service.title %></h3>
+            <p><%= service.description %></p>
+          </div>
+          <% }) %>
+        <% } else { %>
+          <div class="skill-card fade-in-up">
+            <div class="skill-icon purple">🌐</div>
+            <h3>WordPress Development</h3>
+            <p>Custom themes, plugins, and complete WordPress solutions tailored to your business needs.</p>
+          </div>
+        <% } %>
+      </div>
+      <div class="text-center mt-4">
+        <a href="/services" class="btn btn-outline">
+          <i class="ph ph-arrow-right"></i> View All Services
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">My Work</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A selection of my best work showcasing CMS development expertise.</p>
+      </div>
+      <div class="grid-3">
+        <% projects.forEach(function(project, i) { %>
+        <article class="card fade-in-up">
+          <img src="<%= project.image %>" alt="<%= project.title %>" class="card-image" loading="lazy" />
+          <div class="card-body">
+            <span class="card-tag"><%= project.category %></span>
+            <h3 class="card-title"><%= project.title %></h3>
+            <p class="card-text"><%= project.description.substring(0, 120) %>...</p>
+            <div class="tech-badges">
+              <% project.tech_stack.split(',').slice(0,3).forEach(function(tech) { %>
+                <span class="tech-badge">🔧 <%= tech.trim() %></span>
+              <% }) %>
+            </div>
+            <div class="card-footer mt-2">
+              <a href="/portfolio/<%= project.id %>" class="btn btn-primary btn-sm">
+                <i class="ph ph-eye"></i> View Project
+              </a>
+              <a href="<%= project.live_url %>" class="btn btn-secondary btn-sm" target="_blank">
+                <i class="ph ph-arrow-square-out"></i> Live
+              </a>
+            </div>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+      <div class="text-center mt-4">
+        <a href="/portfolio" class="btn btn-outline">
+          <i class="ph ph-folders"></i> View All Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section" style="background: var(--dark-2);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Testimonials</div>
+        <h2 class="section-title">What Clients Say</h2>
+        <p class="section-subtitle">Don't just take my word for it. Here's what my clients have to say.</p>
+      </div>
+      <div class="grid-3">
+        <% testimonials.forEach(function(t, i) { %>
+        <div class="testimonial-card fade-in-up">
+          <div class="testimonial-stars">
+            <% for(var s = 0; s < t.rating; s++) { %>⭐<% } %>
+          </div>
+          <p class="testimonial-text">"<%= t.message %>"</p>
+          <div class="testimonial-author">
+            <img src="<%= t.avatar %>" alt="<%= t.name %>" class="testimonial-avatar" loading="lazy" />
+            <div class="testimonial-info">
+              <strong><%= t.name %></strong>
+              <span><%= t.designation %>, <%= t.company %></span>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Blog -->
+  <% if (posts.length > 0) { %>
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Blog</div>
+        <h2 class="section-title">Latest Articles</h2>
+        <p class="section-subtitle">Sharing knowledge about CMS development, WordPress, and web technologies.</p>
+      </div>
+      <div class="grid-3">
+        <% posts.forEach(function(post, i) { %>
+        <article class="card fade-in-up">
+          <img src="<%= post.image %>" alt="<%= post.title %>" class="card-image" loading="lazy" />
+          <div class="card-body">
+            <span class="card-tag"><%= post.category %></span>
+            <h3 class="card-title"><%= post.title %></h3>
+            <p class="card-text"><%= post.excerpt %></p>
+            <div class="card-footer">
+              <div class="post-meta">
+                <span>📅 <%= new Date(post.created_at).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}) %></span>
+              </div>
+              <a href="/blog/<%= post.slug %>" class="btn btn-primary btn-sm">Read →</a>
+            </div>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+      <div class="text-center mt-4">
+        <a href="/blog" class="btn btn-outline">
+          <i class="ph ph-newspaper"></i> View All Articles
+        </a>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container" style="position: relative; z-index: 1; text-align: center;">
+      <div class="section-tag" style="margin-bottom: 1.5rem;">Let's Work Together</div>
+      <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 1rem;">
+        Ready to Build Something <span class="text-gradient">Amazing?</span>
+      </h2>
+      <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 500px; margin: 0 auto 2rem;">
+        Have a project in mind? I'd love to help you bring your vision to life with the perfect CMS solution.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/contact" class="btn btn-primary btn-lg">
+          <i class="ph ph-paper-plane-tilt"></i> Get In Touch
+        </a>
+        <a href="/portfolio" class="btn btn-secondary btn-lg">
+          <i class="ph ph-eye"></i> View My Work
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>

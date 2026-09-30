@@ -1,0 +1,62 @@
+<div class="admin-header">
+  <div>
+    <h1 class="admin-title">📩 Messages</h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Contact form submissions from visitors.</p>
+  </div>
+</div>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); overflow: hidden;">
+  <% if (messages.length > 0) { %>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% messages.forEach(msg => { %>
+      <tr style="<%= msg.status === 'unread' ? 'background: rgba(108, 99, 255, 0.03);' : '' %>">
+        <td style="font-weight: 600; color: var(--text-primary);">
+          <%= msg.status === 'unread' ? '🔵 ' : '' %><%= msg.name %>
+        </td>
+        <td><a href="mailto:<%= msg.email %>" style="color: var(--primary);"><%= msg.email %></a></td>
+        <td><%= msg.subject || '-' %></td>
+        <td style="max-width: 250px; color: var(--text-secondary);">
+          <%= msg.message.substring(0, 80) %><%= msg.message.length > 80 ? '...' : '' %>
+        </td>
+        <td><%= new Date(msg.created_at).toLocaleDateString('en-IN') %></td>
+        <td>
+          <span class="badge <%= msg.status === 'unread' ? 'badge-danger' : 'badge-success' %>">
+            <%= msg.status %>
+          </span>
+        </td>
+        <td>
+          <% if (msg.status === 'unread') { %>
+          <form action="/admin/messages/<%= msg.id %>/read" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-secondary btn-sm" title="Mark as Read">
+              <i class="ph ph-check"></i> Read
+            </button>
+          </form>
+          <% } %>
+          <a href="mailto:<%= msg.email %>?subject=Re: <%= msg.subject || 'Your Message' %>" class="btn btn-primary btn-sm" style="margin-left: 0.25rem;">
+            <i class="ph ph-reply"></i> Reply
+          </a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <div style="padding: 4rem; text-align: center; color: var(--text-muted);">
+    <i class="ph ph-envelope-simple" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+    <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">No Messages Yet</h3>
+    <p>Contact form submissions will appear here.</p>
+  </div>
+  <% } %>
+</div>

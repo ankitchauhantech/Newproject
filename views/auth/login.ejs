@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title || 'Login - Ankit Chauhan' %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236C63FF'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Inter' font-weight='800' font-size='18' fill='white'>A</text></svg>" />
+</head>
+<body>
+  <!-- Flash Messages -->
+  <div class="flash-container" id="flashContainer">
+    <% if (success_msg && success_msg.length > 0) { %>
+      <div class="flash-message flash-success"><i class="ph ph-check-circle"></i> <%= success_msg %></div>
+    <% } %>
+    <% if (error_msg && error_msg.length > 0) { %>
+      <div class="flash-message flash-error"><i class="ph ph-warning-circle"></i> <%= error_msg %></div>
+    <% } %>
+  </div>
+
+  <div class="auth-page">
+    <div class="auth-card fade-in-up">
+      <div class="auth-logo">
+        <a href="/" style="display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; margin-bottom: 1rem;">
+          <div class="nav-logo-icon" style="width: 52px; height: 52px; font-size: 1.5rem;">AC</div>
+          <div class="nav-logo-text">
+            <span class="nav-logo-name" style="font-size: 1.25rem;">Ankit Chauhan</span>
+            <span class="nav-logo-role">CMS Developer</span>
+          </div>
+        </a>
+      </div>
+
+      <h1 class="auth-title">Welcome Back! 👋</h1>
+      <p class="auth-subtitle">Sign in to your account to continue.</p>
+
+      <form action="/auth/login" method="POST" style="margin-top: 2rem;" id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">
+            <i class="ph ph-envelope"></i> Email Address
+          </label>
+          <input type="email" id="loginEmail" name="email" class="form-control" placeholder="ankit@ankitchauhan.dev" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">
+            <i class="ph ph-lock"></i> Password
+          </label>
+          <div style="position: relative;">
+            <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Enter your password" required style="padding-right: 3rem;" />
+            <button type="button" id="togglePwd" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; display: flex; align-items: center;">
+              <i class="ph ph-eye" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" style="border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+          <i class="ph ph-sign-in"></i> Sign In
+        </button>
+      </form>
+
+      <div class="auth-divider">or</div>
+
+      <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+        Don't have an account?
+        <a href="/auth/register" style="color: var(--primary); font-weight: 600;">Create one →</a>
+      </p>
+
+      <p style="text-align: center; margin-top: 1rem;">
+        <a href="/" style="color: var(--text-muted); font-size: 0.85rem;">
+          <i class="ph ph-arrow-left"></i> Back to Website
+        </a>
+      </p>
+
+      <!-- Demo Credentials -->
+      <div style="margin-top: 1.5rem; background: rgba(108, 99, 255, 0.08); border: 1px solid rgba(108, 99, 255, 0.2); border-radius: 12px; padding: 1rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Demo Admin Login</p>
+        <p style="color: var(--primary); font-size: 0.85rem;">📧 ankit@ankitchauhan.dev</p>
+        <p style="color: var(--primary); font-size: 0.85rem;">🔑 admin123</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    // Toggle password visibility
+    document.getElementById('togglePwd').addEventListener('click', function() {
+      const pwd = document.getElementById('loginPassword');
+      const icon = document.getElementById('eyeIcon');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        icon.className = 'ph ph-eye-slash';
+      } else {
+        pwd.type = 'password';
+        icon.className = 'ph ph-eye';
+      }
+    });
+  </script>
+</body>
+</html>

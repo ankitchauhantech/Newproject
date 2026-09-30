@@ -1,0 +1,77 @@
+<%- include('../partials/header', {title: title}) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="section-tag">Project Detail</div>
+        <h1 class="page-hero-title"><span class="text-gradient"><%= project.title %></span></h1>
+        <nav class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <a href="/portfolio">Portfolio</a>
+          <span class="breadcrumb-sep">›</span>
+          <span><%= project.title.substring(0, 30) %>...</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="align-items: start;">
+        <div class="fade-in-up">
+          <img src="<%= project.image %>" alt="<%= project.title %>" style="width: 100%; border-radius: var(--border-radius-lg); object-fit: cover; height: 400px;" loading="lazy" />
+        </div>
+        <div class="fade-in-up animate-delay-2">
+          <% if (project.featured) { %>
+            <span class="badge badge-success mb-2" style="font-size: 0.85rem;">⭐ Featured Project</span>
+          <% } %>
+          <span class="card-tag mb-2"><%= project.category %></span>
+          <h2 style="font-size: 2rem; font-weight: 800; margin: 1rem 0 1.25rem;"><%= project.title %></h2>
+          <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.9; margin-bottom: 2rem;"><%= project.description %></p>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); padding: 1.5rem; margin-bottom: 2rem;">
+            <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem;">Project Details</h4>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Category</span>
+                <span style="color: var(--primary); font-weight: 600; font-size: 0.9rem;"><%= project.category %></span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Date</span>
+                <span style="color: var(--text-primary); font-size: 0.9rem;"><%= new Date(project.created_at).toLocaleDateString('en-IN', {month: 'long', year: 'numeric'}) %></span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 2rem;">
+            <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 0.75rem;">Tech Stack</h4>
+            <div class="tech-badges">
+              <% project.tech_stack.split(',').forEach(function(tech) { %>
+                <span class="tech-badge">🔧 <%= tech.trim() %></span>
+              <% }) %>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="<%= project.live_url %>" class="btn btn-primary" target="_blank">
+              <i class="ph ph-arrow-square-out"></i> Live Demo
+            </a>
+            <a href="<%= project.github_url %>" class="btn btn-secondary" target="_blank">
+              <i class="ph ph-github-logo"></i> View Code
+            </a>
+            <a href="/portfolio" class="btn btn-secondary">
+              <i class="ph ph-arrow-left"></i> Back
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>

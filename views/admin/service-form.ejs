@@ -1,0 +1,55 @@
+<div class="admin-header">
+  <div>
+    <h1 class="admin-title"><%= typeof service !== 'undefined' && service ? '✏️ Edit Service' : '➕ Add Service' %></h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;"><%= typeof service !== 'undefined' && service ? 'Update service details.' : 'Add a new service offering.' %></p>
+  </div>
+  <a href="/admin/services" class="btn btn-secondary">
+    <i class="ph ph-arrow-left"></i> Back to Services
+  </a>
+</div>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); padding: 2rem; max-width: 700px;">
+  <form action="<%= typeof service !== 'undefined' && service ? '/admin/services/edit/' + service.id : '/admin/services/add' %>" method="POST">
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Service Title *</label>
+        <input type="text" name="title" class="form-control" placeholder="E.g. Web Development" value="<%= typeof service !== 'undefined' && service ? service.title : '' %>" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Icon (Emoji) *</label>
+        <input type="text" name="icon" class="form-control" placeholder="E.g. 🌐" value="<%= typeof service !== 'undefined' && service ? service.icon : '' %>" required />
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label">Icon Color Background</label>
+      <select name="icon_color" class="form-control">
+        <% ['purple', 'blue', 'green', 'pink'].forEach(col => { %>
+        <option value="<%= col %>" <%= typeof service !== 'undefined' && service && service.icon_color === col ? 'selected' : '' %>><%= col %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Description *</label>
+      <textarea name="description" class="form-control" rows="3" placeholder="Describe the service..." required><%= typeof service !== 'undefined' && service ? service.description : '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Features (comma separated)</label>
+      <textarea name="features" class="form-control" rows="3" placeholder="Feature 1, Feature 2, Feature 3"><%= typeof service !== 'undefined' && service ? service.features : '' %></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+        <input type="checkbox" name="active" value="1" <%= !service || service.active ? 'checked' : '' %> style="width: 18px; height: 18px; accent-color: var(--primary);" />
+        <span class="form-label" style="margin: 0;">✅ Active (Visible on frontend)</span>
+      </label>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+      <button type="submit" class="btn btn-primary">
+        <i class="ph ph-floppy-disk"></i> <%= typeof service !== 'undefined' && service ? 'Update Service' : 'Add Service' %>
+      </button>
+      <a href="/admin/services" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

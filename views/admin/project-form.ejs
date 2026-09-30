@@ -1,0 +1,64 @@
+<div class="admin-header">
+  <div>
+    <h1 class="admin-title"><%= project ? '✏️ Edit Project' : '➕ Add Project' %></h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;"><%= project ? 'Update project details.' : 'Add a new project to your portfolio.' %></p>
+  </div>
+  <a href="/admin/projects" class="btn btn-secondary">
+    <i class="ph ph-arrow-left"></i> Back to Projects
+  </a>
+</div>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); padding: 2rem; max-width: 700px;">
+  <form action="<%= project ? '/admin/projects/edit/' + project.id : '/admin/projects/add' %>" method="POST">
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Project Title *</label>
+        <input type="text" name="title" class="form-control" placeholder="E.g. E-Commerce CMS" value="<%= project ? project.title : '' %>" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category *</label>
+        <select name="category" class="form-control" required>
+          <option value="">Select Category</option>
+          <% ['CMS', 'WordPress', 'Headless CMS', 'Node.js', 'Web App', 'E-Commerce'].forEach(cat => { %>
+          <option value="<%= cat %>" <%= project && project.category === cat ? 'selected' : '' %>><%= cat %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description *</label>
+      <textarea name="description" class="form-control" rows="4" placeholder="Describe the project..." required><%= project ? project.description : '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tech Stack (comma separated)</label>
+      <input type="text" name="tech_stack" class="form-control" placeholder="WordPress, PHP, MySQL, Elementor" value="<%= project ? project.tech_stack : '' %>" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Image URL</label>
+      <input type="url" name="image" class="form-control" placeholder="https://images.unsplash.com/..." value="<%= project ? project.image : '' %>" />
+      <small style="color: var(--text-muted); font-size: 0.8rem;">Use Unsplash URL: https://images.unsplash.com/photo-...?w=800</small>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Live URL</label>
+        <input type="url" name="live_url" class="form-control" placeholder="https://example.com" value="<%= project ? project.live_url : '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">GitHub URL</label>
+        <input type="url" name="github_url" class="form-control" placeholder="https://github.com/..." value="<%= project ? project.github_url : '' %>" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+        <input type="checkbox" name="featured" value="1" <%= project && project.featured ? 'checked' : '' %> style="width: 18px; height: 18px; accent-color: var(--primary);" />
+        <span class="form-label" style="margin: 0;">⭐ Mark as Featured Project</span>
+      </label>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+      <button type="submit" class="btn btn-primary">
+        <i class="ph ph-floppy-disk"></i> <%= project ? 'Update Project' : 'Add Project' %>
+      </button>
+      <a href="/admin/projects" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

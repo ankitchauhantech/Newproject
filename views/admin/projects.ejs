@@ -1,0 +1,65 @@
+<div class="admin-header">
+  <div>
+    <h1 class="admin-title">📁 Projects</h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Manage your portfolio projects.</p>
+  </div>
+  <a href="/admin/projects/add" class="btn btn-primary">
+    <i class="ph ph-plus"></i> Add New Project
+  </a>
+</div>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); overflow: hidden;">
+  <% if (projects.length > 0) { %>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Featured</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% projects.forEach(project => { %>
+      <tr>
+        <td>
+          <img src="<%= project.image %>" alt="<%= project.title %>" style="width: 56px; height: 40px; object-fit: cover; border-radius: 6px;" loading="lazy" />
+        </td>
+        <td style="font-weight: 600; color: var(--text-primary);"><%= project.title %></td>
+        <td><span class="badge badge-primary"><%= project.category %></span></td>
+        <td>
+          <span class="badge <%= project.featured ? 'badge-success' : 'badge-secondary' %>">
+            <%= project.featured ? '⭐ Yes' : 'No' %>
+          </span>
+        </td>
+        <td><%= new Date(project.created_at).toLocaleDateString('en-IN') %></td>
+        <td>
+          <div style="display: flex; gap: 0.5rem;">
+            <a href="/portfolio/<%= project.id %>" class="btn btn-secondary btn-sm" target="_blank" title="View">
+              <i class="ph ph-eye"></i>
+            </a>
+            <a href="/admin/projects/edit/<%= project.id %>" class="btn btn-primary btn-sm" title="Edit">
+              <i class="ph ph-pencil-simple"></i>
+            </a>
+            <form action="/admin/projects/delete/<%= project.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Delete this project?')">
+              <button type="submit" class="btn btn-sm" style="background: rgba(255,101,132,0.15); color: var(--secondary); border: 1px solid rgba(255,101,132,0.3);" title="Delete">
+                <i class="ph ph-trash"></i>
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <div style="padding: 4rem; text-align: center; color: var(--text-muted);">
+    <i class="ph ph-briefcase" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+    <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">No Projects Yet</h3>
+    <p style="margin-bottom: 1.5rem;">Add your first portfolio project to get started.</p>
+    <a href="/admin/projects/add" class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Project</a>
+  </div>
+  <% } %>
+</div>

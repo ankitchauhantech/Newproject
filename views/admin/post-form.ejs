@@ -1,0 +1,56 @@
+<div class="admin-header">
+  <div>
+    <h1 class="admin-title"><%= post ? '✏️ Edit Post' : '✍️ Write New Post' %></h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Share your knowledge with the world.</p>
+  </div>
+  <a href="/admin/posts" class="btn btn-secondary">
+    <i class="ph ph-arrow-left"></i> Back to Posts
+  </a>
+</div>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--border-radius); padding: 2rem; max-width: 800px;">
+  <form action="<%= post ? '/admin/posts/edit/' + post.id : '/admin/posts/add' %>" method="POST">
+    <div class="form-group">
+      <label class="form-label">Post Title *</label>
+      <input type="text" name="title" class="form-control" placeholder="E.g. Top 10 WordPress Plugins..." value="<%= post ? post.title : '' %>" required />
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select name="category" class="form-control">
+          <% ['CMS', 'WordPress', 'Headless CMS', 'Node.js', 'SEO', 'Web Development', 'Tutorial'].forEach(cat => { %>
+          <option value="<%= cat %>" <%= post && post.category === cat ? 'selected' : '' %>><%= cat %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tags (comma separated)</label>
+        <input type="text" name="tags" class="form-control" placeholder="WordPress, Plugin, Tutorial" value="<%= post ? post.tags : '' %>" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Featured Image URL</label>
+      <input type="url" name="image" class="form-control" placeholder="https://images.unsplash.com/..." value="<%= post ? post.image : '' %>" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Excerpt (Short Description)</label>
+      <textarea name="excerpt" class="form-control" rows="2" placeholder="A brief summary of the post..."><%= post ? post.excerpt : '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Content (HTML Supported) *</label>
+      <textarea name="content" class="form-control" rows="15" placeholder="Write your blog post content here... You can use HTML tags like &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, etc." required><%= post ? post.content : '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+        <input type="checkbox" name="published" value="1" <%= !post || post.published ? 'checked' : '' %> style="width: 18px; height: 18px; accent-color: var(--primary);" />
+        <span class="form-label" style="margin: 0;">✅ Publish immediately</span>
+      </label>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+      <button type="submit" class="btn btn-primary">
+        <i class="ph ph-floppy-disk"></i> <%= post ? 'Update Post' : 'Publish Post' %>
+      </button>
+      <a href="/admin/posts" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

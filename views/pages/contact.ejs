@@ -1,0 +1,119 @@
+<%- include('../partials/header', {title: title}) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="section-tag">Get In Touch</div>
+        <h1 class="page-hero-title">Let's <span class="text-gradient">Talk</span></h1>
+        <nav class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <span>Contact</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="fade-in-up">
+          <div class="contact-info-card">
+            <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.75rem;">Let's Build Something <span class="text-gradient">Together</span></h2>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 2rem;">Have a project in mind? I'd love to hear about it. Feel free to reach out using any of the methods below.</p>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">📧</div>
+              <div class="contact-info-text">
+                <strong>Email</strong>
+                <span>ankit@ankitchauhan.dev</span>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">📱</div>
+              <div class="contact-info-text">
+                <strong>Phone / WhatsApp</strong>
+                <span>+91 98765 43210</span>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">📍</div>
+              <div class="contact-info-text">
+                <strong>Location</strong>
+                <span>India (Available Worldwide)</span>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">🕐</div>
+              <div class="contact-info-text">
+                <strong>Working Hours</strong>
+                <span>Mon - Fri: 9:00 AM - 6:00 PM IST</span>
+              </div>
+            </div>
+
+            <div style="background: rgba(67, 233, 123, 0.1); border: 1px solid rgba(67, 233, 123, 0.2); border-radius: 12px; padding: 1.25rem; margin-top: 1.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-size: 1.5rem;">⚡</span>
+                <div>
+                  <strong style="color: var(--accent); display: block; font-size: 0.9rem;">Quick Response</strong>
+                  <span style="color: var(--text-secondary); font-size: 0.85rem;">I typically respond within 2-4 hours during business days.</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+              <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem;">Connect on Social</h4>
+              <div class="footer-social">
+                <a href="#" class="social-link" title="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+                <a href="#" class="social-link" title="GitHub"><i class="ph ph-github-logo"></i></a>
+                <a href="#" class="social-link" title="Twitter"><i class="ph ph-twitter-logo"></i></a>
+                <a href="#" class="social-link" title="Instagram"><i class="ph ph-instagram-logo"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-in-up animate-delay-2">
+          <div class="contact-form-card">
+            <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">Send Me a Message</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Fill out the form below and I'll get back to you as soon as possible.</p>
+
+            <form action="/contact" method="POST" id="contactForm">
+              <div class="grid-2" style="gap: 1rem; margin-bottom: 0;">
+                <div class="form-group">
+                  <label class="form-label" for="contactName">Your Name *</label>
+                  <input type="text" id="contactName" name="name" class="form-control" placeholder="Rahul Sharma" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contactEmail">Email Address *</label>
+                  <input type="email" id="contactEmail" name="email" class="form-control" placeholder="rahul@example.com" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactSubject">Subject</label>
+                <input type="text" id="contactSubject" name="subject" class="form-control" placeholder="WordPress Website Development" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactMessage">Message *</label>
+                <textarea id="contactMessage" name="message" class="form-control" placeholder="Tell me about your project..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100" id="submitBtn">
+                <i class="ph ph-paper-plane-tilt"></i>
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>
